@@ -3,7 +3,6 @@ package com.example.app
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.gms.maps.SupportMapFragment
 
 class MyViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
     override fun getItemCount(): Int {
@@ -12,9 +11,9 @@ class MyViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdap
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> ListFragment.newInstance()
-            1 -> MapFragment.newInstance()
-            else -> InfoFragment.newInstance()
+            0 -> InfoFragment.newInstance()
+            1 -> ListFragment.newInstance()
+            else -> MapFragment.newInstance()
         }
     }
 }

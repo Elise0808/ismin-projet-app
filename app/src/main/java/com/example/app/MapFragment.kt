@@ -1,12 +1,14 @@
 package com.example.app
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -22,18 +24,22 @@ import com.google.android.gms.maps.model.MarkerOptions
  */
 class MapFragment : Fragment() {
 
+    private var listener: MapCallBack? = null
     private lateinit var mapFragment: SupportMapFragment
+    private lateinit var btnBack : com.google.android.material.floatingactionbutton.FloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         //Initialize view
-        var view: View = inflater.inflate(R.layout.fragment_map, container, false)
+        var rootView: View = inflater.inflate(R.layout.fragment_map, container, false)
+
+        mapFragment = childFragmentManager.findFragmentById(R.id.f_map_map) as SupportMapFragment
+        btnBack = rootView.findViewById(R.id.f_map_backButton)
 
         //Initialize map fragment
         val supportMapFragment: SupportMapFragment = SupportMapFragment.newInstance()
-        mapFragment = childFragmentManager.findFragmentById(R.id.f_map_map) as SupportMapFragment
         supportMapFragment.getMapAsync(OnMapReadyCallback {
             //Check permission
             if (ActivityCompat.checkSelfPermission(
@@ -56,7 +62,28 @@ class MapFragment : Fragment() {
                 )
             }
         })
-        return view
+
+        //button go back
+        btnBack.setOnClickListener{
+            listener?.onBackFromMaps()
+        }
+
+        return rootView
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is MapCallBack) {
+            listener = context
+        }
+        else {
+            throw java.lang.RuntimeException("$context must implement MapCallBack")
+        }
+    }
+
+    override fun onDetach(){
+        super.onDetach()
+        listener = null
     }
 
     companion object {

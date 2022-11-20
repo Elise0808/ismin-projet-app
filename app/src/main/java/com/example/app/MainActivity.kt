@@ -12,15 +12,14 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.tabs.TabLayout
 
-class MainActivity : AppCompatActivity(){
-    //private lateinit var binding: ActivityMapsBinding
+class MainActivity : AppCompatActivity(), MapCallBack{
+
     private lateinit var tabLayout : TabLayout
     private lateinit var viewPager2 : ViewPager2
     private lateinit var myViewPagerAdapter : MyViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
 
         // Swipe between fragments
@@ -31,6 +30,7 @@ class MainActivity : AppCompatActivity(){
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
+                viewPager2.isUserInputEnabled = tab!!.position != 2
                 viewPager2.currentItem = tab!!.position
             }
 
@@ -42,8 +42,14 @@ class MainActivity : AppCompatActivity(){
         })
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
+                viewPager2.isUserInputEnabled = position != 2
                 tabLayout.selectTab(tabLayout.getTabAt(position))
             }
         })
+    }
+
+    override fun onBackFromMaps(){
+        viewPager2.isUserInputEnabled = true
+        tabLayout.selectTab(tabLayout.getTabAt(1))
     }
 }

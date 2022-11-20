@@ -1,10 +1,12 @@
 package com.example.app
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 
 /**
  * A simple [Fragment] subclass.
@@ -13,12 +15,21 @@ import android.view.ViewGroup
  */
 class InfoFragment : Fragment() {
 
+    private lateinit var txtURL : TextView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_info, container, false)
+        var rootView : View = inflater.inflate(R.layout.fragment_info, container, false)
+
+        txtURL = rootView.findViewById(R.id.f_info_txt_url)
+
+        // Add hyperlink
+        txtURL.movementMethod = LinkMovementMethod.getInstance()
+
+        return rootView
     }
 
     companion object {
