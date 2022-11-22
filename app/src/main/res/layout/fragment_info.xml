@@ -16,7 +16,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout2"
@@ -35,7 +37,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/f_info_txt_url"
+                        android:id="@+id/f_info_txv_urldata"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -50,7 +52,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/f_info_txv_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -70,7 +72,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/f_info_txv_donnees"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
@@ -84,15 +86,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:background="#FFFFFF"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView15">
+                    app:layout_constraintTop_toBottomOf="@+id/f_info_txv_donnees">
 
                     <TextView
-                        android:id="@+id/textView11"
+                        android:id="@+id/f_info_txv_donneesdata1_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -104,7 +105,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/f_info_txv_donneesdata1_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -130,7 +131,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
                     <TextView
-                        android:id="@+id/textView13"
+                        android:id="@+id/f_info_txv_donneesdata2_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -142,7 +143,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView14"
+                        android:id="@+id/f_info_txv_donneesdata2_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -168,7 +169,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
 
                     <TextView
-                        android:id="@+id/textView16"
+                        android:id="@+id/f_info_txv_donneesdata3_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -193,7 +194,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout7">
 
                     <TextView
-                        android:id="@+id/textView17"
+                        android:id="@+id/f_info_txv_donneesdata4_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -218,7 +219,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
 
                     <TextView
-                        android:id="@+id/textView18"
+                        android:id="@+id/f_info_txv_donneesdata5_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -243,7 +244,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
 
                     <TextView
-                        android:id="@+id/textView19"
+                        android:id="@+id/f_info_txv_donneesdata6_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -268,7 +269,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
 
                     <TextView
-                        android:id="@+id/textView22"
+                        android:id="@+id/f_info_txv_donneesdata7_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -293,7 +294,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout10">
 
                     <TextView
-                        android:id="@+id/textView23"
+                        android:id="@+id/f_info_txv_donneesdata8_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -318,7 +319,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout11">
 
                     <TextView
-                        android:id="@+id/textView24"
+                        android:id="@+id/f_info_txv_donneesdata9_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -343,7 +344,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout12">
 
                     <TextView
-                        android:id="@+id/textView25"
+                        android:id="@+id/f_info_txv_donneesdata10_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -362,7 +363,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/textView26"
+                    android:id="@+id/f_info_txv_librairie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
@@ -381,10 +382,10 @@
                     android:background="#FFFFFF"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView26">
+                    app:layout_constraintTop_toBottomOf="@+id/f_info_txv_librairie">
 
                     <TextView
-                        android:id="@+id/textView28"
+                        android:id="@+id/f_info_txv_librairiedata1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -409,7 +410,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout16">
 
                     <TextView
-                        android:id="@+id/textView29"
+                        android:id="@+id/f_info_txv_librairiedata2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -434,7 +435,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout14">
 
                     <TextView
-                        android:id="@+id/textView30"
+                        android:id="@+id/f_info_txv_librairiedata3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -452,7 +453,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/textView27"
+                    android:id="@+id/f_info_txv_licence"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
@@ -472,10 +473,10 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView27">
+                    app:layout_constraintTop_toBottomOf="@+id/f_info_txv_licence">
 
                     <TextView
-                        android:id="@+id/textView31"
+                        android:id="@+id/f_info_txv_licencedata1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
