@@ -4,6 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * Adapter for the list of stations.
+ */
 class StationAdapter(private var stations: List<Station>) : RecyclerView.Adapter<StationViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StationViewHolder {

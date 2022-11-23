@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 /**
- * A simple [Fragment] subclass.
- * Use the [ListFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Fragment that displays the list of stations and some of their information.
  */
 
 private const val STATIONS = "stations"
@@ -37,6 +35,7 @@ class ListFragment : Fragment() {
 
         stationAdapter = StationAdapter(stations)
 
+        //Link to a recycler view
         rcvStations = rootView.findViewById(R.id.f_list_rcv_stations)
         rcvStations.adapter = stationAdapter
 

@@ -18,9 +18,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 /**
- * A simple [Fragment] subclass.
- * Use the [MapFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Fragment that displays a Google map to show stations.
  */
 class MapFragment : Fragment() {
 

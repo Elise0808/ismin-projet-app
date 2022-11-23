@@ -2,6 +2,9 @@ package com.example.app
 
 import java.lang.RuntimeException
 
+/**
+ * A class that represents a list of stations.
+ */
 class StationList {
     private val stations: HashMap<Int, Station> = HashMap();
 

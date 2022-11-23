@@ -4,6 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
+/**
+ * Adapter that manages the fragments of the view pager.
+ */
 class MyViewPagerAdapter(fragmentActivity: FragmentActivity, private val stations : ArrayList<Station>) : FragmentStateAdapter(fragmentActivity) {
     override fun getItemCount(): Int {
         return 3

@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 /**
- * A simple [Fragment] subclass.
- * Use the [InfoFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Fragment that displays information about the app.
  */
 class InfoFragment : Fragment() {
 

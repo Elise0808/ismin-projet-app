@@ -2,15 +2,17 @@ package com.example.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
-//import com.example.app.databinding.ActivityMapsBinding
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.tabs.TabLayout
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+
+const val SERVER_BASE_URL = "https://station-npev.cleverapps.io"
 
 class MainActivity : AppCompatActivity(), MapCallBack{
 
@@ -19,19 +21,57 @@ class MainActivity : AppCompatActivity(), MapCallBack{
     private lateinit var viewPager2 : ViewPager2
     private lateinit var myViewPagerAdapter : MyViewPagerAdapter
 
+    val retrofit = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl(SERVER_BASE_URL)
+        .build()
+
+    val stationService = retrofit.create(StationService::class.java)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialize stations
-        val station = Station( 1,"12 rue Clémenceau","Aix en Provence", "21 Octobre 2022 10:31 AM","E10", 1.67,"Toilettes","Oui",13100,-1.000,43.000, false)
-        stationList.addStation(station)
-        val anotherStation = Station(2,"2 rue du Val de Grace","Paris", "14 Octobre 2022 10:31 AM", "Gazole",0.67, "Nissou", "Non",75005,15.980,33.675, false)
-        stationList.addStation(anotherStation)
+        setData()
+    }
 
+    /**
+     * Prevent from swiping while using MapsFragment
+     */
+    override fun onBackFromMaps(){
+        viewPager2.isUserInputEnabled = true
+        tabLayout.selectTab(tabLayout.getTabAt(1))
+    }
+
+    /**
+     * Get data from API
+     */
+    fun setData(){
+        stationService.getAllStations()
+            .enqueue(object : Callback<List<Station>> {
+                override fun onResponse(call: Call<List<Station>>, response: Response<List<Station>>) {
+                    val allStations : List<Station>? = response.body()
+                    for(station in allStations!!) {
+                        stationList.addStation(station)
+                    }
+                    Log.d("StationList", stationList.getAllStations().toString())
+                    displayFragments()
+                }
+                override fun onFailure(call: Call<List<Station>>, t: Throwable) {
+                    t.printStackTrace()
+                    Log.d("MainActivity", "onFailure: $t")
+                }
+            })
+    }
+
+    /**
+     * Display the ViewPager2
+     */
+    fun displayFragments() {
         // Swipe between fragments
         tabLayout = findViewById(R.id.tab_layout)
         viewPager2 = findViewById(R.id.view_pager2)
+        Log.d("MainActivity", "onCreate: ${stationList.getAllStations()}")
         myViewPagerAdapter = MyViewPagerAdapter(this, stationList.getAllStations())
         viewPager2.adapter = myViewPagerAdapter
 
@@ -53,13 +93,5 @@ class MainActivity : AppCompatActivity(), MapCallBack{
                 tabLayout.selectTab(tabLayout.getTabAt(position))
             }
         })
-    }
-
-    /**
-     * Prevent from swiping while using MapsFragment
-     */
-    override fun onBackFromMaps(){
-        viewPager2.isUserInputEnabled = true
-        tabLayout.selectTab(tabLayout.getTabAt(1))
     }
 }
