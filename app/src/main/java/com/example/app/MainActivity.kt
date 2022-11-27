@@ -1,8 +1,12 @@
 package com.example.app
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import retrofit2.Call
@@ -14,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 const val SERVER_BASE_URL = "https://station-npev.cleverapps.io"
 
-class MainActivity : AppCompatActivity(), MapCallBack{
+class MainActivity : AppCompatActivity(), MapCallBack, ListCallBack{
 
     private var stationList = StationList()
     private lateinit var tabLayout : TabLayout
@@ -27,6 +31,13 @@ class MainActivity : AppCompatActivity(), MapCallBack{
         .build()
 
     val stationService = retrofit.create(StationService::class.java)
+
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val station = result.data?.getSerializableExtra("setFavorite") as Station
+            onFavorite(station.id, station.fav)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +55,37 @@ class MainActivity : AppCompatActivity(), MapCallBack{
     }
 
     /**
+     * Set favorite for station
+     * @param id Int
+     * @param favorite Boolean
+     */
+    override fun onFavorite(id: Int, fav: Boolean){
+        stationList.setFavorite(id, fav)
+
+        stationService.setFavoriteStation(id.toString(), fav)
+            .enqueue(object : Callback<Station> {
+            override fun onResponse(call: Call<Station>, response: Response<Station>) {
+                val allStations : Station? = response.body()
+                Log.d("MainActivity", "onResponse: $allStations")
+            }
+            override fun onFailure(call: Call<Station>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
+    }
+
+    /**
+     * Open a new activity with the station's details
+     * @param id Int
+     */
+    override fun onDetails(id: Int){
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("station", stationList.getStation(id))
+        startForResult.launch(intent)
+
+    }
+
+    /**
      * Get data from API
      */
     fun setData(){
@@ -54,7 +96,6 @@ class MainActivity : AppCompatActivity(), MapCallBack{
                     for(station in allStations!!) {
                         stationList.addStation(station)
                     }
-                    Log.d("StationList", stationList.getAllStations().toString())
                     displayFragments()
                 }
                 override fun onFailure(call: Call<List<Station>>, t: Throwable) {
@@ -71,7 +112,6 @@ class MainActivity : AppCompatActivity(), MapCallBack{
         // Swipe between fragments
         tabLayout = findViewById(R.id.tab_layout)
         viewPager2 = findViewById(R.id.view_pager2)
-        Log.d("MainActivity", "onCreate: ${stationList.getAllStations()}")
         myViewPagerAdapter = MyViewPagerAdapter(this, stationList.getAllStations())
         viewPager2.adapter = myViewPagerAdapter
 
@@ -94,4 +134,5 @@ class MainActivity : AppCompatActivity(), MapCallBack{
             }
         })
     }
+
 }

@@ -16,7 +16,7 @@ class MyViewPagerAdapter(fragmentActivity: FragmentActivity, private val station
         return when (position) {
             0 -> InfoFragment.newInstance()
             1 -> ListFragment.newInstance(stations)
-            else -> MapFragment.newInstance()
+            else -> MapFragment.newInstance(stations)
         }
     }
 

@@ -20,51 +20,38 @@ import com.google.android.gms.maps.model.MarkerOptions
 /**
  * Fragment that displays a Google map to show stations.
  */
+private const val STATIONS = "stations"
+
 class MapFragment : Fragment() {
 
     private var listener: MapCallBack? = null
+    private var stations: ArrayList<Station> = arrayListOf()
     private lateinit var mapFragment: SupportMapFragment
     private lateinit var btnBack : com.google.android.material.floatingactionbutton.FloatingActionButton
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            stations = it.getSerializable(STATIONS) as ArrayList<Station>
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        //Initialize view
-        var rootView: View = inflater.inflate(R.layout.fragment_map, container, false)
+    ): View {
+        // Inflate the layout for this fragment
+        val rootView: View = inflater.inflate(R.layout.fragment_map, container, false)
 
+        // Link to the map fragment
         mapFragment = childFragmentManager.findFragmentById(R.id.f_map_map) as SupportMapFragment
         btnBack = rootView.findViewById(R.id.f_map_backButton)
-
-        //Initialize map fragment
-        val supportMapFragment: SupportMapFragment = SupportMapFragment.newInstance()
-        supportMapFragment.getMapAsync(OnMapReadyCallback {
-            //Check permission
-            if (ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                //When permission granted
-                //Enable location
-                it.isMyLocationEnabled = true
-                //Zoom to current location
-                it.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(48.8566, 2.3522), 10f))
-            } else {
-                //When permission denied
-                //Request permission
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    44
-                )
-            }
-        })
-
-        //button go back
-        btnBack.setOnClickListener{
+        btnBack.setOnClickListener {
             listener?.onBackFromMaps()
         }
+
+        initMapFragment()
+        setStations()
 
         return rootView
     }
@@ -84,11 +71,41 @@ class MapFragment : Fragment() {
         listener = null
     }
 
+    /**
+     * Initialize the map fragment.
+     */
+    private fun initMapFragment(){
+        val supportMapFragment: SupportMapFragment = SupportMapFragment.newInstance()
+        supportMapFragment.getMapAsync(OnMapReadyCallback {
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return@OnMapReadyCallback
+            }
+        })
+    }
+
+    private fun setStations(){
+        mapFragment.getMapAsync(OnMapReadyCallback { googleMap ->
+            for (station in stations){
+                val latLng = LatLng(station.lat, station.long)
+                googleMap.addMarker(MarkerOptions().position(latLng).title(station.address))
+            }
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(48.856614,2.3522219), 12f))
+        })
+    }
+
     companion object {
         @JvmStatic
-        fun newInstance() =
+        fun newInstance(stations: ArrayList<Station>) =
             MapFragment().apply {
                 arguments = Bundle().apply {
+                    putSerializable(STATIONS, stations)
                 }
             }
     }

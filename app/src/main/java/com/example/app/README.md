@@ -4,3 +4,6 @@
 
 Les données ont été déployées avec CleverCloud suivant le service de pagination, il a donc fallu
 récupérer les données sous une nouvelle forme pour les transformer
+
+comme tous les téléohones, celuli ci se lève parfois du mauvais pied, dans ce cas, redémarrer
+l'émulateur voire l'application

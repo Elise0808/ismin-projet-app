@@ -27,4 +27,8 @@ class StationList {
     fun clean() {
         stations.clear();
     }
+
+    fun setFavorite(id: Int, fav: Boolean) {
+        stations[id]?.fav = fav
+    }
 }
