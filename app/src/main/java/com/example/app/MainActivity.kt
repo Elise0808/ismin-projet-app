@@ -5,6 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.viewpager2.widget.ViewPager2
@@ -25,17 +27,19 @@ class MainActivity : AppCompatActivity(), MapCallBack, ListCallBack{
     private lateinit var viewPager2 : ViewPager2
     private lateinit var myViewPagerAdapter : MyViewPagerAdapter
 
-    val retrofit = Retrofit.Builder()
+    private val retrofit: Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(SERVER_BASE_URL)
         .build()
 
-    val stationService = retrofit.create(StationService::class.java)
+    private val stationService: StationService = retrofit.create(StationService::class.java)
 
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
             val station = result.data?.getSerializableExtra("setFavorite") as Station
+            val position = result.data?.getIntExtra("position", 1)
             onFavorite(station.id, station.fav)
+            displayFragments(stationList, position!!)
         }
     }
 
@@ -44,6 +48,22 @@ class MainActivity : AppCompatActivity(), MapCallBack, ListCallBack{
         setContentView(R.layout.activity_main)
 
         setData()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_refresh -> {
+                setData()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     /**
@@ -55,18 +75,25 @@ class MainActivity : AppCompatActivity(), MapCallBack, ListCallBack{
     }
 
     /**
+     * Show details about one station
+     */
+    override fun onStationSelected(id: Int) {
+        onDetails(id, 2)
+    }
+
+    /**
      * Set favorite for station
      * @param id Int
      * @param favorite Boolean
      */
     override fun onFavorite(id: Int, fav: Boolean){
+        var favRequest = FavRequest(fav)
+
         stationList.setFavorite(id, fav)
 
-        stationService.setFavoriteStation(id.toString(), fav)
+        stationService.setFavoriteStation(id.toString(), favRequest)
             .enqueue(object : Callback<Station> {
             override fun onResponse(call: Call<Station>, response: Response<Station>) {
-                val allStations : Station? = response.body()
-                Log.d("MainActivity", "onResponse: $allStations")
             }
             override fun onFailure(call: Call<Station>, t: Throwable) {
                 t.printStackTrace()
@@ -78,17 +105,35 @@ class MainActivity : AppCompatActivity(), MapCallBack, ListCallBack{
      * Open a new activity with the station's details
      * @param id Int
      */
-    override fun onDetails(id: Int){
+    override fun onDetails(id: Int, position : Int){
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("station", stationList.getStation(id))
+        intent.putExtra("position", position)
         startForResult.launch(intent)
 
+    }
+
+    override fun onSearch(search: String){
+        val searchTerm = Search(search)
+        stationService.searchStation(searchTerm).enqueue(object : Callback<List<Station>> {
+            override fun onResponse(call: Call<List<Station>>, response: Response<List<Station>>) {
+                val allStations : List<Station>? = response.body()
+                val stationListSearch = StationList()
+                for(station in allStations!!) {
+                    stationListSearch.addStation(station)
+                }
+                displayFragments(stationListSearch)
+            }
+            override fun onFailure(call: Call<List<Station>>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
     }
 
     /**
      * Get data from API
      */
-    fun setData(){
+    private fun setData(){
         stationService.getAllStations()
             .enqueue(object : Callback<List<Station>> {
                 override fun onResponse(call: Call<List<Station>>, response: Response<List<Station>>) {
@@ -96,7 +141,7 @@ class MainActivity : AppCompatActivity(), MapCallBack, ListCallBack{
                     for(station in allStations!!) {
                         stationList.addStation(station)
                     }
-                    displayFragments()
+                    displayFragments(stationList)
                 }
                 override fun onFailure(call: Call<List<Station>>, t: Throwable) {
                     t.printStackTrace()
@@ -108,12 +153,15 @@ class MainActivity : AppCompatActivity(), MapCallBack, ListCallBack{
     /**
      * Display the ViewPager2
      */
-    fun displayFragments() {
+    fun displayFragments(stationListShow : StationList, position : Int = 1) {
         // Swipe between fragments
         tabLayout = findViewById(R.id.tab_layout)
         viewPager2 = findViewById(R.id.view_pager2)
-        myViewPagerAdapter = MyViewPagerAdapter(this, stationList.getAllStations())
+        myViewPagerAdapter = MyViewPagerAdapter(this, stationListShow.getAllStations())
         viewPager2.adapter = myViewPagerAdapter
+
+        viewPager2.currentItem = position
+        tabLayout.selectTab(tabLayout.getTabAt(position))
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {

@@ -39,7 +39,7 @@ class StationAdapter(private var stations: List<Station>, private var listener: 
         }
 
         holder.imvDetails.setOnClickListener {
-            listener?.onDetails(station.id)
+            listener?.onDetails(station.id, 1)
         }
 
         setImvPicture(holder, station)

@@ -14,15 +14,18 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.app.databinding.ActivityDetailBinding
+import kotlin.properties.Delegates
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var station : Station
+    private var position by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
         station = intent.getSerializableExtra("station") as Station
+        position = intent.getIntExtra("position", 1)
         setDetails(station)
 
     }
@@ -38,6 +41,7 @@ class DetailActivity : AppCompatActivity() {
             R.id.action_quit -> {
                 val intent = Intent()
                 intent.putExtra("setFavorite", station)
+                intent.putExtra("position", position)
                 setResult(RESULT_OK, intent)
                 finish()
                 true

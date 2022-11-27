@@ -1,5 +1,7 @@
 package com.example.app
 
+import com.google.gson.annotations.SerializedName
+
 data class Station (
     val id: Int,
     val address: String,
@@ -12,4 +14,5 @@ data class Station (
     val pc: Int,
     val lat: Double,
     val long: Double,
+    @SerializedName("fav")
     var fav: Boolean) : java.io.Serializable

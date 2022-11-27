@@ -4,17 +4,20 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
 /**
@@ -95,6 +98,9 @@ class MapFragment : Fragment() {
             for (station in stations){
                 val latLng = LatLng(station.lat, station.long)
                 googleMap.addMarker(MarkerOptions().position(latLng).title(station.address))
+                googleMap.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener {
+                    listener?.onStationSelected(station.id)
+                })
             }
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(48.856614,2.3522219), 12f))
         })
@@ -109,4 +115,5 @@ class MapFragment : Fragment() {
                 }
             }
     }
+
 }
