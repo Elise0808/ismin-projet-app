@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:id="@+id/f_list_searchView"
-            app:queryHint="Adresse, essence..."/>
+            app:queryHint="Adresse, carburant..."/>
 
     </androidx.appcompat.widget.Toolbar>
         

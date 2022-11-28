@@ -1,10 +1,7 @@
 package com.example.app
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.OnReceiveContentListener
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -76,9 +73,9 @@ class StationAdapter(private var stations: List<Station>, private var listener: 
 
     private fun setFavorite(holder: StationViewHolder, station: Station) {
         if (station.fav) {
-            holder.imvFav.setImageResource(R.drawable.fav_on)
+            holder.imvFav.setImageResource(R.drawable.fav_on_24)
         } else {
-            holder.imvFav.setImageResource(R.drawable.fav_off)
+            holder.imvFav.setImageResource(R.drawable.fav_off_24)
         }
     }
 

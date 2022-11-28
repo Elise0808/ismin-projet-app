@@ -8,32 +8,43 @@
     android:background="#F1F1F1F1"
     tools:context=".DetailActivity">
 
+    <ImageButton
+        android:id="@+id/a_detail_imv_loc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#F1F1F1"
+        android:minWidth="32dp"
+        android:minHeight="32dp"
+        app:background="@drawable/location_32"
+        app:layout_constraintBottom_toTopOf="@+id/a_detail_txv_essences"
+        app:layout_constraintEnd_toStartOf="@+id/a_detail_imv_fav"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/a_detail_txv_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="8dp"
         android:text="TextView"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/a_detail_imv_fav"
+        app:layout_constraintEnd_toStartOf="@+id/a_detail_imv_loc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/a_detail_imv_fav"
-        android:layout_width="54dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
-        android:backgroundTint="#F1F1F1F1"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout9"
+        android:background="@drawable/fav_off_32"
+        android:minWidth="32dp"
+        android:minHeight="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/a_detail_txv_essences"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/a_detail_txv_essences"

@@ -1,19 +1,13 @@
 package com.example.app
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.app.databinding.ActivityDetailBinding
 import kotlin.properties.Delegates
 
 class DetailActivity : AppCompatActivity() {
@@ -39,19 +33,17 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_quit -> {
-                val intent = Intent()
-                intent.putExtra("setFavorite", station)
-                intent.putExtra("position", position)
-                setResult(RESULT_OK, intent)
-                finish()
+                quit(1)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setDetails(station : Station){
-        setFavorite(findViewById<ImageButton>(R.id.a_detail_imv_fav), station)
+        setFavorite(findViewById(R.id.a_detail_imv_fav), station)
+        setMap(findViewById(R.id.a_detail_imv_loc))
         findViewById<TextView>(R.id.a_detail_txv_address).text = station.address + " " + station.pc + ", " + station.city
 
         if ("SP95" in station.price_name){
@@ -101,28 +93,39 @@ class DetailActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.a_detail_txv_GPLc_price).text = "Non disponible / renseigné"
             findViewById<TextView>(R.id.a_detail_txv_GPLc_update).text = "Non disponible / renseigné"
         }
-        var serviceTxv : String = ""
-        if(station.service != null) {
-            for (service in station.service) {
-                serviceTxv += service + "\n"
-            }
-        }
-        else{
-            serviceTxv = "Non disponible / renseigné"
+        var serviceTxv = ""
+        for (service in station.service) {
+            serviceTxv += service + "\n"
         }
         findViewById<TextView>(R.id.a_detail_txv_services_data).text = serviceTxv
     }
 
     private fun setFavorite(imvFav: ImageButton,station: Station) {
         if(station.fav) {
-            imvFav.setImageResource(R.drawable.fav_on)
+            imvFav.setImageResource(R.drawable.fav_on_32)
         }
         else {
-            imvFav.setImageResource(R.drawable.fav_off)
+            imvFav.setImageResource(R.drawable.fav_off_32)
         }
         imvFav.setOnClickListener {
             station.fav = !station.fav
             setFavorite(imvFav, station)
         }
+    }
+
+    private fun setMap(imvMap: ImageButton) {
+        imvMap.setImageResource(R.drawable.location_32)
+        imvMap.setOnClickListener {
+            quit(2)
+        }
+    }
+
+    private fun quit(position: Int){
+        val intent = Intent()
+        intent.putExtra("setFavorite", station)
+        intent.putExtra("position", position)
+        intent.putExtra("map", station.id)
+        setResult(RESULT_OK, intent)
+        finish()
     }
 }

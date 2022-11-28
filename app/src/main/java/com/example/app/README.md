@@ -10,6 +10,12 @@ l'émulateur voire l'application
 
 swipe entre les fragments
 possibilité de rafraîchir les données
-Info : rien de particulier
+Info : scroolview
 Stations : recherche, affichage des stations, mise en favori enregistrée, affichage des détails
-Carte : pins sur les lieux, retour arrière avec une flèche pour que le swipe ne pose pas problème
+Carte : pins sur les lieux, retour arrière avec une flèche pour que le swipe ne pose pas problème, 
+        cluster, possibilité d'accéder aux détails en cliquant, zoom
+
+petite croix pour la recherche
+search avec essences
+remplir infos
+introduction

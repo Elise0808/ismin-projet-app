@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/fav_off"
+        android:background="@drawable/fav_off_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/r_station_imv_details"
         app:layout_constraintTop_toTopOf="parent" />

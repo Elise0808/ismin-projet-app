@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 /**
  * Adapter that manages the fragments of the view pager.
  */
-class MyViewPagerAdapter(fragmentActivity: FragmentActivity, private val stations : ArrayList<Station>) : FragmentStateAdapter(fragmentActivity) {
+class MyViewPagerAdapter(fragmentActivity: FragmentActivity, private val stations : ArrayList<Station>, private var mapMarker : Int = 0) : FragmentStateAdapter(fragmentActivity) {
     override fun getItemCount(): Int {
         return 3
     }
@@ -16,7 +16,7 @@ class MyViewPagerAdapter(fragmentActivity: FragmentActivity, private val station
         return when (position) {
             0 -> InfoFragment.newInstance()
             1 -> ListFragment.newInstance(stations)
-            else -> MapFragment.newInstance(stations)
+            else -> MapFragment.newInstance(stations, mapMarker)
         }
     }
 

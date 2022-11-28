@@ -38,8 +38,9 @@ class MainActivity : AppCompatActivity(), MapCallBack, ListCallBack{
         if (result.resultCode == Activity.RESULT_OK) {
             val station = result.data?.getSerializableExtra("setFavorite") as Station
             val position = result.data?.getIntExtra("position", 1)
+            val mapMarker = result.data?.getIntExtra("map", 0)
             onFavorite(station.id, station.fav)
-            displayFragments(stationList, position!!)
+            displayFragments(stationList, position!!, mapMarker!!)
         }
     }
 
@@ -153,11 +154,11 @@ class MainActivity : AppCompatActivity(), MapCallBack, ListCallBack{
     /**
      * Display the ViewPager2
      */
-    fun displayFragments(stationListShow : StationList, position : Int = 1) {
+    fun displayFragments(stationListShow : StationList, position : Int = 1, map : Int = 0){
         // Swipe between fragments
         tabLayout = findViewById(R.id.tab_layout)
         viewPager2 = findViewById(R.id.view_pager2)
-        myViewPagerAdapter = MyViewPagerAdapter(this, stationListShow.getAllStations())
+        myViewPagerAdapter = MyViewPagerAdapter(this, stationListShow.getAllStations(), map)
         viewPager2.adapter = myViewPagerAdapter
 
         viewPager2.currentItem = position
