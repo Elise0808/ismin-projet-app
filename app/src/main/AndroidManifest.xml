@@ -17,7 +17,7 @@
         <activity
             android:name=".DetailActivity"
             android:exported="false"
-            android:label="@string/title_activity_detail"
+            android:label="Détails"
             android:theme="@style/Theme.Details">
             <meta-data
                 android:name="android.app.lib_name"

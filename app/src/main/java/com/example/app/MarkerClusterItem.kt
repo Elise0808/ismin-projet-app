@@ -3,6 +3,14 @@ package com.example.app
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
 
+/**
+ * class for marker cluster items
+ * @param position position of the marker
+ * @param title title of the marker
+ * @param snippet snippet of the marker
+ * @param id id of the station
+ */
+
 class MarkerClusterItem(
     lat: Double,
     lng: Double,

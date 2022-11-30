@@ -22,9 +22,8 @@ class InfoFragment : Fragment() {
         // Inflate the layout for this fragment
         var rootView : View = inflater.inflate(R.layout.fragment_info, container, false)
 
-        txtURL = rootView.findViewById(R.id.f_info_txv_urldata)
-
         // Add hyperlink
+        txtURL = rootView.findViewById(R.id.f_info_txv_urldata)
         txtURL.movementMethod = LinkMovementMethod.getInstance()
 
         return rootView

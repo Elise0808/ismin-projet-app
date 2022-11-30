@@ -4,7 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="linktodata">
-        <a href="https://www.data.gouv.fr/fr/datasets/prix-des-carburants-en-france-flux-instantane/">Stations essence France</a>
+        <a href="https://data.iledefrance.fr/explore/dataset/prix-des-carburants-j-7/information/">Stations essence France</a>
     </string>
     <string name="title_activity_detail">DetailActivity</string>
     <!-- Strings used for fragments for navigation -->

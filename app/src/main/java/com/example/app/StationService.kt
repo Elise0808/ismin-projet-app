@@ -1,6 +1,5 @@
 package com.example.app
 
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import retrofit2.Call
 import retrofit2.http.*
 

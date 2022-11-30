@@ -1,5 +1,6 @@
 package com.example.app
 
+import com.google.android.gms.maps.model.LatLng
 import java.lang.RuntimeException
 
 /**
@@ -18,6 +19,14 @@ class StationList {
 
     fun getAllStations(): ArrayList<Station> {
         return ArrayList(stations.values.sortedBy { it.id })
+    }
+
+    fun getCoordinates() : ArrayList<LatLng> {
+        var coordinates = arrayListOf<LatLng>()
+        for (station in stations.values) {
+            coordinates.add(LatLng(station.lat, station.long))
+        }
+        return coordinates
     }
 
     fun getTotalNumberOfStations(): Int {
