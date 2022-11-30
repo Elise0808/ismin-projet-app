@@ -10,6 +10,10 @@ Pour résoudre ce problème :
         - Relancer la configuration "app" 
         - Lancer le Device Manager
 
+Il se peut que votre ordinateur ne crée pas lui même le fichier `local.properties`
+        - créer un fichier `local.properties` dans le dossier `Gradle Scripts`
+        - écrire la ligne `sdk.dir=C\:\\Users\\[votre nom d'utilisateur]\\AppData\\Local\\Android\\Sdk` dans ce fichier `local.properties`
+
 # ✍ Description
 
 Voici une application vous permettant de suivre la disponibilité des carburants en Île de France.
